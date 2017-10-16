@@ -17,7 +17,7 @@ class Provider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/Config/setting.php' => config_path('setting.php'),
-            __DIR__.'/Migrations/2017_08_22_000000_create_settings_table.php' => database_path('migrations/2017_08_22_000000_create_settings_table.php'),
+            __DIR__.'/Migrations/2017_08_24_000000_create_settings_table.php' => database_path('migrations/2017_08_24_000000_create_settings_table.php'),
         ], 'setting');
 
         $this->app->singleton('setting.manager', function ($app) {
