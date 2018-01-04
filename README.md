@@ -72,7 +72,7 @@ $settings = Setting::all();
 ```php
 setting('foo', 'default');
 setting('nested.element');
-setting(['foo', 'bar']);
+setting(['foo' => 'bar']);
 setting()->forget('foo');
 $settings = setting()->all();
 ```
