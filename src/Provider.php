@@ -37,7 +37,7 @@ class Provider extends ServiceProvider
         // Override config
         if (config('setting.override')) {
             foreach (config('setting.override') as $config_key => $setting_key) {
-                config([$config_key, setting($setting_key)]);
+                config([$config_key => setting($setting_key)]);
             }
         }
 
