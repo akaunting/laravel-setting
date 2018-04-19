@@ -2,19 +2,17 @@
 
 namespace Akaunting\Setting\Middleware;
 
-use Akaunting\Setting\Contracts\Driver;
 use Closure;
 
 class AutoSaveSetting
 {
 	/**
 	 * Create a new save settings middleware
-	 * 
-	 * @param Driver $settings
+	 *
 	 */
-	public function __construct(Driver $setting)
+	public function __construct()
 	{
-		$this->setting = $setting;
+		$this->setting = app('setting');
 	}
 
 	/**
