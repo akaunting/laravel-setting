@@ -16,7 +16,7 @@ class Provider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/Config/setting.php' => config_path('setting.php'),
+            __DIR__.'/Config/setting.php'                                     => config_path('setting.php'),
             __DIR__.'/Migrations/2017_08_24_000000_create_settings_table.php' => database_path('migrations/2017_08_24_000000_create_settings_table.php'),
         ], 'setting');
 
@@ -37,8 +37,16 @@ class Provider extends ServiceProvider
         // Override config
         if (config('setting.override')) {
             foreach (config('setting.override') as $config_key => $setting_key) {
-                config([$config_key => setting($setting_key)]);
+                // handle non associative override declaration
+                $config_key = $config_key ?: $setting_key;
+
+                $value = setting($setting_key);
+                if (is_null($value)) {
+                    continue;
+                }
+                config([$config_key => $value]);
             }
+            unset($value);
         }
 
         // Register blade directive
