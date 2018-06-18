@@ -42,8 +42,8 @@ class Provider extends ServiceProvider
         }
 
         // Register blade directive
-        Blade::directive('setting', function ($expression) {
-            return "<?php echo setting($expression); ?>";
+        Blade::directive('setting', function ($expression, $default) {
+            return "<?php echo setting($expression, $default); ?>";
         });
     }
 
