@@ -16,7 +16,7 @@ class Provider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/Config/setting.php' => config_path('setting.php'),
+            __DIR__.'/Config/setting.php'                                     => config_path('setting.php'),
             __DIR__.'/Migrations/2017_08_24_000000_create_settings_table.php' => database_path('migrations/2017_08_24_000000_create_settings_table.php'),
         ], 'setting');
 
@@ -42,8 +42,8 @@ class Provider extends ServiceProvider
         }
 
         // Register blade directive
-        Blade::directive('setting', function ($expression) {
-            return "<?php echo setting($expression); ?>";
+        Blade::directive('setting', function ($expression, $default) {
+            return "<?php echo setting($expression, $default); ?>";
         });
     }
 
