@@ -37,8 +37,16 @@ class Provider extends ServiceProvider
         // Override config
         if (config('setting.override')) {
             foreach (config('setting.override') as $config_key => $setting_key) {
-                config([$config_key => setting($setting_key)]);
+                // handle non associative override declaration
+                $config_key = $config_key ?: $setting_key;
+
+                $value = setting($setting_key);
+                if (is_null($value)) {
+                    continue;
+                }
+                config([$config_key => $value]);
             }
+            unset($value);
         }
 
         // Register blade directive
