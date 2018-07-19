@@ -85,7 +85,7 @@ If you enable the `auto_save` option in the config file, settings will be saved 
 
 ### Blade Directive
 
-You can get the settings directly in your blade templates using the helper method or the blade directive like `@setting('foo')` or `@setting('foo', 'default')`
+You can get the settings directly in your blade templates using the helper method or the blade directive like `@setting('foo')`
 
 ### JSON Storage
 
