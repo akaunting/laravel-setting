@@ -116,6 +116,16 @@ class Database extends Driver
     }
 
     /**
+     * Get extra columns added to the rows.
+     *
+     * @return array
+     */
+    public function getExtraColumns()
+    {
+        return $this->extraColumns;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function forget($key)
