@@ -37,6 +37,10 @@ abstract class Driver
 	 */
 	public function get($key, $default = null)
 	{
+	    if (!$this->checkExtraColumns()) {
+	        return false;
+        }
+
 		$this->load();
 
 		return Arr::get($this->data, $key, $default);
@@ -51,7 +55,11 @@ abstract class Driver
 	 */
 	public function has($key)
 	{
-		$this->load();
+        if (!$this->checkExtraColumns()) {
+            return false;
+        }
+
+        $this->load();
 
 		return Arr::has($this->data, $key);
 	}
@@ -64,7 +72,11 @@ abstract class Driver
 	 */
 	public function set($key, $value = null)
 	{
-		$this->load();
+        if (!$this->checkExtraColumns()) {
+            return;
+        }
+
+        $this->load();
 		$this->unsaved = true;
 		
 		if (is_array($key)) {
@@ -83,7 +95,11 @@ abstract class Driver
 	 */
 	public function forget($key)
 	{
-		$this->unsaved = true;
+        if (!$this->checkExtraColumns()) {
+            return;
+        }
+
+        $this->unsaved = true;
 
 		if ($this->has($key)) {
 			Arr::forget($this->data, $key);
@@ -97,18 +113,26 @@ abstract class Driver
 	 */
 	public function forgetAll()
 	{
-		$this->unsaved = true;
+        if (!$this->checkExtraColumns()) {
+            return;
+        }
+
+        $this->unsaved = true;
 		$this->data = array();
 	}
 
 	/**
 	 * Get all settings data.
 	 *
-	 * @return array
+	 * @return array|boolean
 	 */
 	public function all()
 	{
-		$this->load();
+        if (!$this->checkExtraColumns()) {
+            return [];
+        }
+
+        $this->load();
 
 		return $this->data;
 	}
@@ -120,7 +144,11 @@ abstract class Driver
 	 */
 	public function save()
 	{
-		if (!$this->unsaved) {
+        if (!$this->checkExtraColumns()) {
+            return;
+        }
+
+        if (!$this->unsaved) {
 			// either nothing has been changed, or data has not been loaded, so
 			// do nothing by returning early
 			return;
@@ -137,11 +165,37 @@ abstract class Driver
 	 */
 	public function load($force = false)
 	{
-		if (!$this->loaded || $force) {
-			$this->data = $this->read();
-			$this->loaded = true;
+        if (!$this->checkExtraColumns()) {
+            return;
+        }
+
+        if ($this->loaded && !$force) {
+			return;
 		}
+
+        $this->data = $this->read();
+        $this->loaded = true;
 	}
+
+	public function checkExtraColumns()
+    {
+        if (!$required_extra_columns = config('setting.required_extra_columns')) {
+            return true;
+        }
+
+        if (array_keys_exists($required_extra_columns, $this->getExtraColumns())) {
+            return true;
+        }
+
+        return false;
+    }
+
+	/**
+	 * Get extra columns added to the rows.
+	 *
+	 * @return array
+	 */
+	abstract protected function getExtraColumns();
 
 	/**
 	 * Read the data from the store.

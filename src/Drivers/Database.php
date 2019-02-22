@@ -49,7 +49,7 @@ class Database extends Driver
      *
      * @var array
      */
-    protected $extraColumns = array();
+    protected $extraColumns = [];
 
     /**
      * @param \Illuminate\Database\Connection $connection

@@ -31,12 +31,6 @@ if (!function_exists('setting')) {
             return $setting;
         }
 
-        if ($required_extra_columns = config('setting.required_extra_columns')) {
-            if (!array_keys_exists($required_extra_columns, $setting->getExtraColumns())) {
-                return false;
-            }
-        }
-
         if (is_array($key)) {
             $setting->set($key);
 

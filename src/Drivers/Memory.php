@@ -16,6 +16,14 @@ class Memory extends Driver
 		}
 	}
 
+    /**
+     * {@inheritdoc}
+     */
+    protected function getExtraColumns()
+    {
+        return [];
+    }
+
 	/**
 	 * {@inheritdoc}
 	 */

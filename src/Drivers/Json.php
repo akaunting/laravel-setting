@@ -40,6 +40,14 @@ class Json extends Driver
 		$this->path = $path;
 	}
 
+    /**
+     * {@inheritdoc}
+     */
+    protected function getExtraColumns()
+    {
+        return [];
+    }
+
 	/**
 	 * {@inheritdoc}
 	 */
