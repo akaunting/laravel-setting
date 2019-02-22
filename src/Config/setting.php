@@ -60,7 +60,6 @@ return [
     | If defined, settings package will override these config values.
     |
     | Sample:
-    |   "app.fallback_locale",
     |   "app.locale" => "settings.locale",
     |
     */
