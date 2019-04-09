@@ -2,7 +2,7 @@
 
 if (!function_exists('array_keys_exists')) {
     /**
-     * Easily check if multiple array keys exist
+     * Easily check if multiple array keys exist.
      *
      * @param  array  $keys
      * @param  array  $arr

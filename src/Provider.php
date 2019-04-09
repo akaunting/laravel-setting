@@ -42,7 +42,7 @@ class Provider extends ServiceProvider
 
                 try {
                     $value = setting($setting_key);
-                    
+
                     if (is_null($value)) {
                         continue;
                     }

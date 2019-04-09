@@ -103,7 +103,7 @@ class Arr
                 throw new \UnexpectedValueException('Non-array segment encountered');
             }
 
-            $data =& $data[$segment];
+            $data = &$data[$segment];
         }
 
         $data[$key] = $value;
@@ -129,7 +129,7 @@ class Arr
                 throw new \UnexpectedValueException('Non-array segment encountered');
             }
 
-            $data =& $data[$segment];
+            $data = &$data[$segment];
         }
 
         unset($data[$key]);

@@ -7,7 +7,6 @@ class CreateSettingsTable extends Migration
 {
     /**
      * Set up the options.
-     *
      */
     public function __construct()
     {

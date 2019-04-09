@@ -38,7 +38,7 @@ class Manager extends BaseManager
         $this->version = $app->version();
         $this->is_lumen = str_contains($this->version, 'Lumen');
     }
-    
+
     public function getDefaultDriver()
     {
         return config('setting.driver');

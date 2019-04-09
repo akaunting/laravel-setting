@@ -14,7 +14,7 @@ class Json extends Driver
     public function __construct(Filesystem $files, $path = null)
     {
         $this->files = $files;
-        
+
         $this->setPath($path ?: storage_path() . '/settings.json');
     }
 

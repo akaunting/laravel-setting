@@ -49,7 +49,7 @@ return [
     |
     */
     'json' => [
-        'path'          => storage_path().'/settings.json',
+        'path'          => storage_path() . '/settings.json',
     ],
 
     /*
@@ -64,7 +64,7 @@ return [
     |
     */
     'override' => [
-        
+
     ],
 
     /*

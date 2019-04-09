@@ -205,13 +205,13 @@ class Database extends Driver
      */
     protected function prepareInsertData(array $data)
     {
-        $dbData = array();
+        $dbData = [];
 
         if ($this->extraColumns) {
             foreach ($data as $key => $value) {
                 $dbData[] = array_merge(
                     $this->extraColumns,
-                    array($this->key => $key, $this->value => $value)
+                    [$this->key => $key, $this->value => $value]
                 );
             }
         } else {
