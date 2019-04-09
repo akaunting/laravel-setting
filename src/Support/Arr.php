@@ -99,7 +99,7 @@ class Arr
         foreach ($segments as $segment) {
             if (!array_key_exists($segment, $data)) {
                 $data[$segment] = array();
-            } else if (!is_array($data[$segment])) {
+            } elseif (!is_array($data[$segment])) {
                 throw new \UnexpectedValueException('Non-array segment encountered');
             }
 
@@ -125,7 +125,7 @@ class Arr
         foreach ($segments as $segment) {
             if (!array_key_exists($segment, $data)) {
                 return;
-            } else if (!is_array($data[$segment])) {
+            } elseif (!is_array($data[$segment])) {
                 throw new \UnexpectedValueException('Non-array segment encountered');
             }
 
