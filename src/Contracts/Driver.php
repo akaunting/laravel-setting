@@ -78,7 +78,7 @@ abstract class Driver
 
         $this->load();
         $this->unsaved = true;
-        
+
         if (is_array($key)) {
             foreach ($key as $k => $v) {
                 Arr::set($this->data, $k, $v);
