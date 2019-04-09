@@ -100,7 +100,7 @@ class Database extends Driver
      */
     public function setConstraint(Closure $callback)
     {
-        $this->data = array();
+        $this->data = [];
         $this->loaded = false;
         $this->queryConstraint = $callback;
     }
@@ -164,8 +164,8 @@ class Database extends Driver
         $keys = $keysQuery->$method($this->key);
 
         $insertData = array_dot($data);
-        $updateData = array();
-        $deleteKeys = array();
+        $updateData = [];
+        $deleteKeys = [];
 
         foreach ($keys as $key) {
             if (isset($insertData[$key])) {
@@ -179,7 +179,7 @@ class Database extends Driver
         foreach ($updateData as $key => $value) {
             $this->newQuery()
                 ->where($this->key, '=', $key)
-                ->update(array($this->value => $value));
+                ->update([$this->value => $value]);
         }
 
         if ($insertData) {
@@ -216,7 +216,7 @@ class Database extends Driver
             }
         } else {
             foreach ($data as $key => $value) {
-                $dbData[] = array($this->key => $key, $this->value => $value);
+                $dbData[] = [$this->key => $key, $this->value => $value];
             }
         }
 
@@ -240,7 +240,7 @@ class Database extends Driver
      */
     public function parseReadData($data)
     {
-        $results = array();
+        $results = [];
 
         foreach ($data as $row) {
             if (is_array($row)) {

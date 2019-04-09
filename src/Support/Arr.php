@@ -48,7 +48,7 @@ class Arr
 
     protected static function getArray(array $input, $keys, $default = null)
     {
-        $output = array();
+        $output = [];
 
         foreach ($keys as $key) {
             static::set($output, $key, static::get($input, $key, $default));
@@ -63,7 +63,7 @@ class Arr
      * @param  array   $data
      * @param  string  $key
      *
-     * @return boolean
+     * @return bool
      */
     public static function has(array $data, $key)
     {

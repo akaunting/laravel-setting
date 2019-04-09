@@ -11,19 +11,19 @@ abstract class Driver
      *
      * @var array
      */
-    protected $data = array();
+    protected $data = [];
 
     /**
      * Whether the store has changed since it was last loaded.
      *
-     * @var boolean
+     * @var bool
      */
     protected $unsaved = false;
 
     /**
      * Whether the settings data are loaded.
      *
-     * @var boolean
+     * @var bool
      */
     protected $loaded = false;
 
@@ -51,7 +51,7 @@ abstract class Driver
      *
      * @param  string  $key
      *
-     * @return boolean
+     * @return bool
      */
     public function has($key)
     {
@@ -124,7 +124,7 @@ abstract class Driver
     /**
      * Get all settings data.
      *
-     * @return array|boolean
+     * @return array|bool
      */
     public function all()
     {

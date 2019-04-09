@@ -10,7 +10,7 @@ return [
     | Auto-save every time the application shuts down
     |
     */
-    'auto_save'			=> false,
+    'auto_save'         => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | Supported: "database", "json"
     |
     */
-    'driver'			=> 'database',
+    'driver'            => 'database',
 
     /*
     |--------------------------------------------------------------------------

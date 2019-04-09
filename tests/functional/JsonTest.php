@@ -4,7 +4,7 @@ class JsonTest extends AbstractFunctionalTest
 {
     protected function createStore(array $data = null)
     {
-        $path = dirname(__DIR__).'/tmp/store.json';
+        $path = dirname(__DIR__) . '/tmp/store.json';
 
         if ($data !== null) {
             if ($data) {
@@ -23,7 +23,7 @@ class JsonTest extends AbstractFunctionalTest
 
     public function tearDown()
     {
-        $path = dirname(__DIR__).'/tmp/store.json';
+        $path = dirname(__DIR__) . '/tmp/store.json';
         unlink($path);
     }
 }
