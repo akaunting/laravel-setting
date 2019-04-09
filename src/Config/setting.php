@@ -10,7 +10,7 @@ return [
     | Auto-save every time the application shuts down
     |
     */
-	'auto_save'			=> false,
+    'auto_save'			=> false,
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | Supported: "database", "json"
     |
     */
-	'driver'			=> 'database',
+    'driver'			=> 'database',
 
     /*
     |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ return [
     | the default connection. Set the table and column names.
     |
     */
-	'database' => [
+    'database' => [
         'connection'    => null,
         'table'         => 'settings',
         'key'           => 'key',
@@ -48,7 +48,7 @@ return [
     | Options for json driver. Enter the full path to the .json file.
     |
     */
-	'json' => [
+    'json' => [
         'path'          => storage_path().'/settings.json',
     ],
 

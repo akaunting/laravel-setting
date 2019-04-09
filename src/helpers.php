@@ -6,9 +6,11 @@ if (!function_exists('array_keys_exists')) {
      *
      * @param  array  $keys
      * @param  array  $arr
+     *
      * @return boolean
      */
-    function array_keys_exists(array $keys, array $arr) {
+    function array_keys_exists(array $keys, array $arr)
+    {
         return !array_diff_key(array_flip($keys), $arr);
     }
 }
@@ -21,6 +23,7 @@ if (!function_exists('setting')) {
      *
      * @param  array|string  $key
      * @param  mixed  $default
+     *
      * @return mixed
      */
     function setting($key = null, $default = null)
