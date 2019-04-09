@@ -15,9 +15,9 @@ class Arr
     /**
      * Get an element from an array.
      *
-     * @param  array  $data
-     * @param  string $key     Specify a nested element by separating keys with full stops.
-     * @param  mixed  $default If the element is not found, return this.
+     * @param array $data
+     * @param string $key     Specify a nested element by separating keys with full stops.
+     * @param mixed $default If the element is not found, return this.
      *
      * @return mixed
      */
@@ -60,8 +60,8 @@ class Arr
     /**
      * Determine if an array has a given key.
      *
-     * @param  array   $data
-     * @param  string  $key
+     * @param array $data
+     * @param string $key
      *
      * @return bool
      */
@@ -85,9 +85,9 @@ class Arr
     /**
      * Set an element of an array.
      *
-     * @param array  $data
+     * @param array $data
      * @param string $key   Specify a nested element by separating keys with full stops.
-     * @param mixed  $value
+     * @param mixed $value
      */
     public static function set(array &$data, $key, $value)
     {
@@ -112,8 +112,8 @@ class Arr
     /**
      * Unset an element from an array.
      *
-     * @param  array  &$data
-     * @param  string $key   Specify a nested element by separating keys with full stops.
+     * @param array &$data
+     * @param string $key   Specify a nested element by separating keys with full stops.
      */
     public static function forget(array &$data, $key)
     {

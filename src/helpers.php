@@ -4,8 +4,8 @@ if (!function_exists('array_keys_exists')) {
     /**
      * Easily check if multiple array keys exist.
      *
-     * @param  array  $keys
-     * @param  array  $arr
+     * @param array $keys
+     * @param array $arr
      *
      * @return boolean
      */
@@ -21,8 +21,8 @@ if (!function_exists('setting')) {
      *
      * If an array is passed as the key, we will assume you want to set an array of values.
      *
-     * @param  array|string  $key
-     * @param  mixed  $default
+     * @param array|string $key
+     * @param mixed $default
      *
      * @return mixed
      */

@@ -30,8 +30,8 @@ abstract class Driver
     /**
      * Get a specific key from the settings data.
      *
-     * @param  string|array $key
-     * @param  mixed        $default Optional default value.
+     * @param string|array $key
+     * @param mixed        $default Optional default value.
      *
      * @return mixed
      */
@@ -49,7 +49,7 @@ abstract class Driver
     /**
      * Determine if a key exists in the settings data.
      *
-     * @param  string  $key
+     * @param string $key
      *
      * @return bool
      */
@@ -91,7 +91,7 @@ abstract class Driver
     /**
      * Unset a key in the settings data.
      *
-     * @param  string $key
+     * @param string $key
      */
     public function forget($key)
     {

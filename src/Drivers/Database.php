@@ -199,7 +199,7 @@ class Database extends Driver
      * database. Call array_dot on a multidimensional array before passing it
      * into this method!
      *
-     * @param  array $data Call array_dot on a multidimensional array before passing it into this method!
+     * @param array $data Call array_dot on a multidimensional array before passing it into this method!
      *
      * @return array
      */
@@ -234,7 +234,7 @@ class Database extends Driver
     /**
      * Parse data coming from the database.
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return array
      */
@@ -263,7 +263,7 @@ class Database extends Driver
     /**
      * Create a new query builder instance.
      *
-     * @param  $insert  boolean  Whether the query is an insert or not.
+     * @param bool $insert
      *
      * @return \Illuminate\Database\Query\Builder
      */
