@@ -7,6 +7,7 @@ use Akaunting\Setting\Drivers\Json;
 use Akaunting\Setting\Drivers\Memory;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Manager as BaseManager;
+use Illuminate\Support\Str;
 
 class Manager extends BaseManager
 {
@@ -36,7 +37,7 @@ class Manager extends BaseManager
         parent::__construct($app);
 
         $this->version = $app->version();
-        $this->is_lumen = str_contains($this->version, 'Lumen');
+        $this->is_lumen = Str::contains($this->version, 'Lumen');
     }
 
     public function getDefaultDriver()
