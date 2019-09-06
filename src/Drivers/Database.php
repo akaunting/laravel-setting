@@ -4,6 +4,7 @@ namespace Akaunting\Setting\Drivers;
 
 use Akaunting\Setting\Contracts\Driver;
 use Akaunting\Setting\Support\Arr;
+use Illuminate\Support\Arr as LaravelArr;
 use Closure;
 use Illuminate\Database\Connection;
 
@@ -163,7 +164,7 @@ class Database extends Driver
         $method = !method_exists($keysQuery, 'lists') ? 'pluck' : 'lists';
         $keys = $keysQuery->$method($this->key);
 
-        $insertData = array_dot($data);
+        $insertData = LaravelArr::dot($data);
         $updateData = [];
         $deleteKeys = [];
 
