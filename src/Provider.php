@@ -5,6 +5,7 @@ namespace Akaunting\Setting;
 use Akaunting\Setting\Middleware\AutoSaveSetting;
 use Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Arr;
 
 class Provider extends ServiceProvider
 {
@@ -33,27 +34,15 @@ class Provider extends ServiceProvider
             $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
             $kernel->pushMiddleware(AutoSaveSetting::class);
         }
+        
+        $override = config('setting.override', []);
 
-        // Override config
-        if (config('setting.override')) {
-            foreach (config('setting.override') as $config_key => $setting_key) {
-                // handle non associative override declaration
-                $config_key = $config_key ?: $setting_key;
+        foreach (Arr::dot($override) as $configKey => $settingKey) {
+            $configKey = $configKey ?: $settingKey;
 
-                try {
-                    $value = setting($setting_key);
-
-                    if (is_null($value)) {
-                        continue;
-                    }
-                } catch (\Exception $e) {
-                    continue;
-                }
-
-                config([$config_key => $value]);
+            if (! is_null($value = setting($settingKey))) {
+                config([$configKey => $value]);
             }
-
-            unset($value);
         }
 
         // Register blade directive
