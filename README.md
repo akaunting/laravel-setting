@@ -161,7 +161,6 @@ If you discover any security related issues, please email security@akaunting.com
 ## Credits
 
 - [Denis Duliçi](https://github.com/denisdulici)
-- [Andreas Lutro](https://github.com/anlutro)
 - [All Contributors](../../contributors)
 
 ## License
