@@ -40,8 +40,12 @@ class Provider extends ServiceProvider
         foreach (Arr::dot($override) as $configKey => $settingKey) {
             $configKey = $configKey ?: $settingKey;
 
-            if (! is_null($value = setting($settingKey))) {
-                config([$configKey => $value]);
+            try {
+                if (! is_null($value = setting($settingKey))) {
+                    config([$configKey => $value]);
+                }
+            } catch (\Exception $e) {	
+                continue;	
             }
         }
 
