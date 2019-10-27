@@ -37,15 +37,15 @@ class Provider extends ServiceProvider
         
         $override = config('setting.override', []);
 
-        foreach (Arr::dot($override) as $configKey => $settingKey) {
-            $configKey = $configKey ?: $settingKey;
+        foreach (Arr::dot($override) as $config_key => $setting_key) {
+            $config_key = $config_key ?: $setting_key;
 
             try {
-                if (! is_null($value = setting($settingKey))) {
-                    config([$configKey => $value]);
+                if (! is_null($value = setting($setting_key))) {
+                    config([$config_key => $value]);
                 }
-            } catch (\Exception $e) {	
-                continue;	
+            } catch (\Exception $e) {
+                continue;
             }
         }
 
