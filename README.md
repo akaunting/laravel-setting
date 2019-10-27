@@ -48,8 +48,15 @@ Publish config file.
 php artisan vendor:publish --tag=setting
 ```
 
+### 4. Database
 
-### 4. Configure
+Create table for database driver
+
+```bash
+php artisan migrate
+```
+
+### 5. Configure
 
 You can change the options of your app from `config/setting.php` file
 
