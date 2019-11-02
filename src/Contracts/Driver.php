@@ -203,11 +203,9 @@ abstract class Driver
      */
     public function readDataFromCache()
     {
-        $data = Cache::remember($this->getCacheKey(), config('setting.cache.ttl'), function () {
+        return Cache::remember($this->getCacheKey(), config('setting.cache.ttl'), function () {
             return $this->read();
         });
-
-        return $data;
     }
 
     /**
