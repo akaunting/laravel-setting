@@ -156,8 +156,8 @@ abstract class Driver
         }
 
         if (config('setting.cache.enabled') && config('setting.cache.auto_clear')) {
-			Cache::forget($this->getCacheKey());
-		}
+            Cache::forget($this->getCacheKey());
+        }
 
         $this->write($this->data);
         $this->unsaved = false;
@@ -183,30 +183,30 @@ abstract class Driver
     }
 
     /**
-	 * Read data from driver or cache
-	 *
-	 * @return array
-	 */
-	public function readData() {
-		if (config('setting.cache.enabled')) {
-			return $this->readDataFromCache();
+     * Read data from driver or cache
+     *
+     * @return array
+     */
+    public function readData() {
+        if (config('setting.cache.enabled')) {
+            return $this->readDataFromCache();
         }
 
-		return $this->read();
-	}
+        return $this->read();
+    }
 
     /**
-	 * Read data from cache
-	 *
-	 * @return array
-	 */
-	public function readDataFromCache() {
-		$data = Cache::remember($this->getCacheKey(), config('setting.cache.ttl'), function () {
+     * Read data from cache
+     *
+     * @return array
+     */
+    public function readDataFromCache() {
+        $data = Cache::remember($this->getCacheKey(), config('setting.cache.ttl'), function () {
             return $this->read();
         });
 
         return $data;
-	}
+    }
 
     /**
      * Check if extra columns are set up.
