@@ -187,7 +187,8 @@ abstract class Driver
      *
      * @return array
      */
-    public function readData() {
+    public function readData()
+    {
         if (config('setting.cache.enabled')) {
             return $this->readDataFromCache();
         }
@@ -200,7 +201,8 @@ abstract class Driver
      *
      * @return array
      */
-    public function readDataFromCache() {
+    public function readDataFromCache()
+    {
         $data = Cache::remember($this->getCacheKey(), config('setting.cache.ttl'), function () {
             return $this->read();
         });
