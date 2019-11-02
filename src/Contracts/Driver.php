@@ -3,6 +3,7 @@
 namespace Akaunting\Setting\Contracts;
 
 use Akaunting\Setting\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 abstract class Driver
 {
@@ -154,6 +155,10 @@ abstract class Driver
             return;
         }
 
+        if (config('setting.cache.enabled') && config('setting.cache.auto_clear')) {
+			Cache::forget($this->getCacheKey());
+		}
+
         $this->write($this->data);
         $this->unsaved = false;
     }
@@ -173,10 +178,41 @@ abstract class Driver
             return;
         }
 
-        $this->data = $this->read();
+        $this->data = $this->readData();
         $this->loaded = true;
     }
 
+    /**
+	 * Read data from driver or cache
+	 *
+	 * @return array
+	 */
+	public function readData() {
+		if (config('setting.cache.enabled')) {
+			return $this->readDataFromCache();
+        }
+
+		return $this->read();
+	}
+
+    /**
+	 * Read data from cache
+	 *
+	 * @return array
+	 */
+	public function readDataFromCache() {
+		$data = Cache::remember($this->getCacheKey(), config('setting.cache.ttl'), function () {
+            return $this->read();
+        });
+
+        return $data;
+	}
+
+    /**
+     * Check if extra columns are set up.
+     *
+     * @return boolean
+     */
     public function checkExtraColumns()
     {
         if (!$required_extra_columns = config('setting.required_extra_columns')) {
@@ -191,6 +227,22 @@ abstract class Driver
     }
 
     /**
+     * Get cache key based on extra columns.
+     *
+     * @return string
+     */
+    public function getCacheKey()
+    {
+        $key = config('setting.cache.key');
+
+        foreach ($this->getExtraColumns() as $name => $value) {
+            $key .= '_' . $name . '_' . $value;
+        }
+
+        return $key;
+    }
+
+    /**
      * Get extra columns added to the rows.
      *
      * @return array
@@ -198,14 +250,14 @@ abstract class Driver
     abstract protected function getExtraColumns();
 
     /**
-     * Read the data from the store.
+     * Read data from driver.
      *
      * @return array
      */
     abstract protected function read();
 
     /**
-     * Write the data into the store.
+     * Write data to driver.
      *
      * @param  array  $data
      *

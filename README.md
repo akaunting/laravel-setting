@@ -15,6 +15,7 @@ This package allows you to save settings in a more persistent way. You can use t
 * Custom file, table and columns
 * Auto save
 * Extra columns
+* Cache support
 
 ## Getting Started
 
@@ -94,7 +95,6 @@ If you enable the `auto_save` option in the config file, settings will be saved 
 
 You can get the settings directly in your blade templates using the helper method or the blade directive like `@setting('foo')`
 
-
 ### Override Config Values 
 
 You can easily override default config values by adding them to the `override` option in `config/setting.php`, thereby eliminating the need to modify the default config files and also allowing you to change said values during production. Ex :
@@ -148,8 +148,8 @@ class MyDriver extends Akaunting\Setting\Contracts\Driver
 	// ...
 }
 
-setting()->extend('mystore', function($app) {
-	return $app->make('MyStore');
+setting()->extend('mydriver', function($app) {
+	return $app->make('MyDriver');
 });
 ```
 

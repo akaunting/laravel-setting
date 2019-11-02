@@ -14,12 +14,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Cache
+    |--------------------------------------------------------------------------
+    |
+    | Options for caching. Set whether to enable cache, its key, time to live
+    | and whether to auto clear after save.
+    |
+    */
+    'cache' => [
+        'enabled'       => false,
+        'key'           => 'setting',
+        'ttl'           => 30,
+        'auto_clear'    => true,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Setting driver
     |--------------------------------------------------------------------------
     |
     | Select where to store the settings.
     |
-    | Supported: "database", "json"
+    | Supported: "database", "json", "memory"
     |
     */
     'driver'            => 'database',

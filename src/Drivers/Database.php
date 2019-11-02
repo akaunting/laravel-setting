@@ -43,14 +43,14 @@ class Database extends Driver
      *
      * @var Closure|null
      */
-    protected $queryConstraint;
+    protected $query_constraint;
 
     /**
      * Any extra columns that should be added to the rows.
      *
      * @var array
      */
-    protected $extraColumns = [];
+    protected $extra_columns = [];
 
     /**
      * @param \Illuminate\Database\Connection $connection
@@ -103,7 +103,7 @@ class Database extends Driver
     {
         $this->data = [];
         $this->loaded = false;
-        $this->queryConstraint = $callback;
+        $this->query_constraint = $callback;
     }
 
     /**
@@ -113,7 +113,7 @@ class Database extends Driver
      */
     public function setExtraColumns(array $columns)
     {
-        $this->extraColumns = $columns;
+        $this->extra_columns = $columns;
     }
 
     /**
@@ -123,7 +123,7 @@ class Database extends Driver
      */
     public function getExtraColumns()
     {
-        return $this->extraColumns;
+        return $this->extra_columns;
     }
 
     /**
@@ -133,7 +133,7 @@ class Database extends Driver
     {
         parent::forget($key);
 
-        // because the database store cannot store empty arrays, remove empty
+        // because the database driver cannot store empty arrays, remove empty
         // arrays to keep data consistent before and after saving
         $segments = explode('.', $key);
         array_pop($segments);
@@ -157,40 +157,36 @@ class Database extends Driver
      */
     protected function write(array $data)
     {
-        $keysQuery = $this->newQuery();
+        $keys = $this->newQuery()->pluck($this->key);
 
-        // "lists" was removed in Laravel 5.3, at which point
-        // "pluck" should provide the same functionality.
-        $method = !method_exists($keysQuery, 'lists') ? 'pluck' : 'lists';
-        $keys = $keysQuery->$method($this->key);
-
-        $insertData = LaravelArr::dot($data);
-        $updateData = [];
-        $deleteKeys = [];
+        $insert_data = LaravelArr::dot($data);
+        $update_data = [];
+        $delete_keys = [];
 
         foreach ($keys as $key) {
-            if (isset($insertData[$key])) {
-                $updateData[$key] = $insertData[$key];
+            if (isset($insert_data[$key])) {
+                $update_data[$key] = $insert_data[$key];
             } else {
-                $deleteKeys[] = $key;
+                $delete_keys[] = $key;
             }
-            unset($insertData[$key]);
+
+            unset($insert_data[$key]);
         }
 
-        foreach ($updateData as $key => $value) {
+        foreach ($update_data as $key => $value) {
             $this->newQuery()
                 ->where($this->key, '=', $key)
                 ->update([$this->value => $value]);
         }
 
-        if ($insertData) {
+        if ($insert_data) {
             $this->newQuery(true)
-                ->insert($this->prepareInsertData($insertData));
+                ->insert($this->prepareInsertData($insert_data));
         }
 
-        if ($deleteKeys) {
+        if ($delete_keys) {
             $this->newQuery()
-                ->whereIn($this->key, $deleteKeys)
+                ->whereIn($this->key, $delete_keys)
                 ->delete();
         }
     }
@@ -206,22 +202,22 @@ class Database extends Driver
      */
     protected function prepareInsertData(array $data)
     {
-        $dbData = [];
+        $db_data = [];
 
-        if ($this->extraColumns) {
+        if ($this->getExtraColumns()) {
             foreach ($data as $key => $value) {
-                $dbData[] = array_merge(
-                    $this->extraColumns,
+                $db_data[] = array_merge(
+                    $this->getExtraColumns(),
                     [$this->key => $key, $this->value => $value]
                 );
             }
         } else {
             foreach ($data as $key => $value) {
-                $dbData[] = [$this->key => $key, $this->value => $value];
+                $db_data[] = [$this->key => $key, $this->value => $value];
             }
         }
 
-        return $dbData;
+        return $db_data;
     }
 
     /**
@@ -273,13 +269,13 @@ class Database extends Driver
         $query = $this->connection->table($this->table);
 
         if (!$insert) {
-            foreach ($this->extraColumns as $key => $value) {
+            foreach ($this->getExtraColumns() as $key => $value) {
                 $query->where($key, '=', $value);
             }
         }
 
-        if ($this->queryConstraint !== null) {
-            $callback = $this->queryConstraint;
+        if ($this->query_constraint !== null) {
+            $callback = $this->query_constraint;
             $callback($query, $insert);
         }
 
