@@ -118,8 +118,12 @@ abstract class Driver
             return;
         }
 
+        if (config('setting.cache.enabled')) {
+            Cache::forget($this->getCacheKey());
+        }
+
         $this->unsaved = true;
-        $this->data = array();
+        $this->data = [];
     }
 
     /**
