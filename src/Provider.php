@@ -34,20 +34,8 @@ class Provider extends ServiceProvider
             $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
             $kernel->pushMiddleware(AutoSaveSetting::class);
         }
-        
-        $override = config('setting.override', []);
 
-        foreach (Arr::dot($override) as $config_key => $setting_key) {
-            $config_key = $config_key ?: $setting_key;
-
-            try {
-                if (! is_null($value = setting($setting_key))) {
-                    config([$config_key => $value]);
-                }
-            } catch (\Exception $e) {
-                continue;
-            }
-        }
+        $this->override();
 
         // Register blade directive
         Blade::directive('setting', function ($expression) {
@@ -63,5 +51,22 @@ class Provider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/Config/setting.php', 'setting');
+    }
+
+    private function override()
+    {
+        $override = config('setting.override', []);
+
+        foreach (Arr::dot($override) as $config_key => $setting_key) {
+            $config_key = is_string($config_key) ? $config_key : $setting_key;
+
+            try {
+                if (! is_null($value = setting($setting_key))) {
+                    config([$config_key => $value]);
+                }
+            } catch (\Exception $e) {
+                continue;
+            }
+        }
     }
 }
