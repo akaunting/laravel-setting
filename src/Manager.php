@@ -58,8 +58,9 @@ class Manager extends BaseManager
         $table = config('setting.database.table');
         $key = config('setting.database.key');
         $value = config('setting.database.value');
+        $encryptedKeys = config('settings.encrypted_keys');
 
-        return new Database($connection, $table, $key, $value);
+        return new Database($connection, $table, $key, $value, $encryptedKeys);
     }
 
     public function createMemoryDriver()

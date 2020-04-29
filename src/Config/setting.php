@@ -98,4 +98,19 @@ return [
     'required_extra_columns' => [
 
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Encryption
+    |--------------------------------------------------------------------------
+    |
+    | Define the keys which should be crypt automatically.
+    |
+    | Sample:
+    |   "payment.key"
+    |
+    */
+   'encrypted_keys' => [
+
+   ],
 ];
