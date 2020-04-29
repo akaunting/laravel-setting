@@ -183,7 +183,7 @@ class Database extends Driver
         }
 
         foreach ($update_data as $key => $value) {
-            $value = $this->prepareValue($value);
+            $value = $this->prepareValue($key, $value);
 
             $this->newQuery()
                 ->where($this->key, '=', $key)
@@ -217,7 +217,7 @@ class Database extends Driver
 
         if ($this->getExtraColumns()) {
             foreach ($data as $key => $value) {
-                $value = $this->prepareValue($value);
+                $value = $this->prepareValue($key, $value);
 
                 $db_data[] = array_merge(
                     $this->getExtraColumns(),
@@ -226,7 +226,7 @@ class Database extends Driver
             }
         } else {
             foreach ($data as $key => $value) {
-                $value = $this->prepareValue($value);
+                $value = $this->prepareValue($key, $value);
 
                 $db_data[] = [$this->key => $key, $this->value => $value];
             }
