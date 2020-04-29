@@ -245,7 +245,8 @@ class Database extends Driver
      *
      * @return string
      */
-    protected function prepareValue(string $key, $value) {
+    protected function prepareValue(string $key, $value)
+    {
 
         // Check if key should be encrypted
         if (in_array($key, $this->encryptedKeys)) {
@@ -265,7 +266,8 @@ class Database extends Driver
      *
      * @return string
      */
-    protected function unpackValue(string $key, $value) {
+    protected function unpackValue(string $key, $value)
+    {
 
         // Check if key should be encrypted
         if (in_array($key, $this->encryptedKeys)) {
