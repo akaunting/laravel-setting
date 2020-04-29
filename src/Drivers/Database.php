@@ -70,7 +70,7 @@ class Database extends Driver
         $this->table = $table ?: 'settings';
         $this->key = $key ?: 'key';
         $this->value = $value ?: 'value';
-        $this->encryptedKeys = $encryptedKeys;
+        $this->encryptedKeys = $encryptedKeys ?: [];
     }
 
     /**
