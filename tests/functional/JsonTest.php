@@ -17,7 +17,8 @@ class JsonTest extends AbstractFunctionalTest
         }
 
         return new \Akaunting\Setting\Drivers\Json(
-            new \Illuminate\Filesystem\Filesystem(), $path
+            new \Illuminate\Filesystem\Filesystem(),
+            $path
         );
     }
 
