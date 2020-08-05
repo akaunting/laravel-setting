@@ -44,25 +44,24 @@ abstract class Driver
 
         $this->load();
 
-        return Arr::get($this->data, $key, $default);
+        return Arr::get($this->data, $key, $this->getFallback($key, $default));
     }
 
     /**
-     * Determine if a key exists in the settings data.
+     * Get the fallback value if default is null.
      *
-     * @param string $key
+     * @param string|array $key
+     * @param mixed        $default
      *
-     * @return bool
+     * @return mixed
      */
-    public function has($key)
+    public function getFallback($key, $default = null)
     {
-        if (!$this->checkExtraColumns()) {
-            return false;
+        if (($default !== null) || is_array($key)) {
+            return $default;
         }
 
-        $this->load();
-
-        return Arr::has($this->data, $key);
+        return Arr::get(config('setting.fallback'), $key);
     }
 
     /**
