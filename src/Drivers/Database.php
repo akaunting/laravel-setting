@@ -4,9 +4,10 @@ namespace Akaunting\Setting\Drivers;
 
 use Akaunting\Setting\Contracts\Driver;
 use Akaunting\Setting\Support\Arr;
-use Illuminate\Support\Arr as LaravelArr;
 use Closure;
 use Illuminate\Database\Connection;
+use Illuminate\Support\Arr as LaravelArr;
+use Illuminate\Support\Facades\Crypt;
 
 class Database extends Driver
 {
@@ -39,6 +40,13 @@ class Database extends Driver
     protected $value;
 
     /**
+     * Keys which should be encrypt automatically.
+     *
+     * @var string
+     */
+    protected $encryptedKeys;
+
+    /**
      * Any query constraints that should be applied.
      *
      * @var Closure|null
@@ -56,12 +64,13 @@ class Database extends Driver
      * @param \Illuminate\Database\Connection $connection
      * @param string $table
      */
-    public function __construct(Connection $connection, $table = null, $key = null, $value = null)
+    public function __construct(Connection $connection, $table = null, $key = null, $value = null, $encryptedKeys = [])
     {
         $this->connection = $connection;
         $this->table = $table ?: 'settings';
         $this->key = $key ?: 'key';
         $this->value = $value ?: 'value';
+        $this->encryptedKeys = $encryptedKeys ?: [];
     }
 
     /**
@@ -174,6 +183,8 @@ class Database extends Driver
         }
 
         foreach ($update_data as $key => $value) {
+            $value = $this->prepareValue($key, $value);
+
             $this->newQuery()
                 ->where($this->key, '=', $key)
                 ->update([$this->value => $value]);
@@ -206,6 +217,8 @@ class Database extends Driver
 
         if ($this->getExtraColumns()) {
             foreach ($data as $key => $value) {
+                $value = $this->prepareValue($key, $value);
+
                 $db_data[] = array_merge(
                     $this->getExtraColumns(),
                     [$this->key => $key, $this->value => $value]
@@ -213,11 +226,56 @@ class Database extends Driver
             }
         } else {
             foreach ($data as $key => $value) {
+                $value = $this->prepareValue($key, $value);
+
                 $db_data[] = [$this->key => $key, $this->value => $value];
             }
         }
 
         return $db_data;
+    }
+
+    /**
+     * Checks if the provided key should be encrypted or not.
+     * Also type casts the given value to a string so errors with booleans or integers are handeled.
+     * Otherwise it returns the original value.
+     *
+     * @param  string $key   Key to check if it's inside the encryptedValues variable.
+     * @param  mixed $value  Info: Encryption only supports strings.
+     *
+     * @return string
+     */
+    protected function prepareValue(string $key, $value)
+    {
+
+        // Check if key should be encrypted
+        if (in_array($key, $this->encryptedKeys)) {
+            // Cast to string to avoid error when a user passes a boolean value
+            return Crypt::encryptString((string) $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Checks if the provided key should be decrypted or not.
+     * Otherwise it returns the original value.
+     *
+     * @param  string $key   Key to check if it's inside the encryptedValues variable.
+     * @param  mixed $value  Info: Encryption only supports strings.
+     *
+     * @return string
+     */
+    protected function unpackValue(string $key, $value)
+    {
+
+        // Check if key should be encrypted
+        if (in_array($key, $this->encryptedKeys)) {
+            // Cast to string to avoid error when a user passes a boolean value
+            return Crypt::decryptString((string) $value);
+        }
+
+        return $value;
     }
 
     /**
@@ -250,6 +308,9 @@ class Database extends Driver
                 $msg = 'Expected array or object, got ' . gettype($row);
                 throw new \UnexpectedValueException($msg);
             }
+
+            // Encryption
+            $value = $this->unpackValue($key, $value);
 
             Arr::set($results, $key, $value);
         }

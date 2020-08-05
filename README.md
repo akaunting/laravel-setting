@@ -12,6 +12,7 @@ This package allows you to save settings in a more persistent way. You can use t
 * Helper function
 * Blade directive
 * Override config values
+* Encryption
 * Custom file, table and columns
 * Auto save
 * Extra columns
@@ -95,7 +96,7 @@ If you enable the `auto_save` option in the config file, settings will be saved 
 
 You can get the settings directly in your blade templates using the helper method or the blade directive like `@setting('foo')`
 
-### Override Config Values 
+### Override Config Values
 
 You can easily override default config values by adding them to the `override` option in `config/setting.php`, thereby eliminating the need to modify the default config files and also allowing you to change said values during production. Ex :
 ```php
@@ -107,6 +108,15 @@ You can easily override default config values by adding them to the `override` o
 ],
 ```
 The values on the left corresponds to the respective config value (Ex: config('app.name')) and the value on the right is the name of the `key` in your settings table/json file.
+
+### Encryption
+
+If you like to encrypt the values for a give key, you can pass the key to the `encrypted_keys` option in `config/setting.php` and the rest is automatically handled by using Laravel's built-in encryption facilities. Ex:
+```php
+'encrypted_keys' => [
+        "payment.key",
+],
+```
 
 ### JSON Storage
 
