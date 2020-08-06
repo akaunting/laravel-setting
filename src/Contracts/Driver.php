@@ -65,6 +65,24 @@ abstract class Driver
     }
 
     /**
+     * Determine if a key exists in the settings data.
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function has($key)
+    {
+        if (!$this->checkExtraColumns()) {
+            return false;
+        }
+
+        $this->load();
+
+        return Arr::has($this->data, $key);
+    }
+
+    /**
      * Set a specific key to a value in the settings data.
      *
      * @param string|array $key   Key string or associative array of key => value
