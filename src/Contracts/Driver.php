@@ -61,7 +61,7 @@ abstract class Driver
             return $default;
         }
 
-        return Arr::get(config('setting.fallback'), $key);
+        return Arr::get((array) config('setting.fallback'), $key);
     }
 
     /**
