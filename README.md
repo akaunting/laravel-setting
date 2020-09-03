@@ -113,7 +113,7 @@ The values on the left corresponds to the respective config value (Ex: config('a
 
 ### Encryption
 
-If you like to encrypt the values for a give key, you can pass the key to the `encrypted_keys` option in `config/setting.php` and the rest is automatically handled by using Laravel's built-in encryption facilities. Ex:
+If you like to encrypt the values for a given key, you can pass the key to the `encrypted_keys` option in `config/setting.php` and the rest is automatically handled by using Laravel's built-in encryption facilities. Ex:
 
 ```php
 'encrypted_keys' => [
