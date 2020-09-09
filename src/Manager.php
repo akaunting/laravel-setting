@@ -5,39 +5,27 @@ namespace Akaunting\Setting;
 use Akaunting\Setting\Drivers\Database;
 use Akaunting\Setting\Drivers\Json;
 use Akaunting\Setting\Drivers\Memory;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Manager as BaseManager;
-use Illuminate\Support\Str;
 
 class Manager extends BaseManager
 {
     /**
-     * Normalized Laravel Version.
+     * The container instance.
      *
-     * @var string
+     * @var \Illuminate\Contracts\Container\Container
      */
-    protected $version;
+    protected $container;
 
     /**
-     * True when this is a Lumen application.
+     * The application instance.
      *
-     * @var bool
-     */
-    protected $is_lumen = false;
-
-    /**
-     * @param Application $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      */
     public function __construct($app = null)
     {
-        if (!$app) {
-            $app = app();   //Fallback when $app is not given
-        }
+        $this->container = $app ?? app();
 
-        parent::__construct($app);
-
-        $this->version = $app->version();
-        $this->is_lumen = Str::contains($this->version, 'Lumen');
+        parent::__construct($this->container);
     }
 
     public function getDefaultDriver()
@@ -49,12 +37,12 @@ class Manager extends BaseManager
     {
         $path = config('setting.json.path');
 
-        return new Json($this->app['files'], $path);
+        return new Json($this->container['files'], $path);
     }
 
     public function createDatabaseDriver()
     {
-        $connection = $this->app['db']->connection(config('setting.database.connection'));
+        $connection = $this->container['db']->connection(config('setting.database.connection'));
         $table = config('setting.database.table');
         $key = config('setting.database.key');
         $value = config('setting.database.value');
