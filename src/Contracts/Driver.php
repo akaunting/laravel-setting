@@ -29,6 +29,23 @@ abstract class Driver
     protected $loaded = false;
 
     /**
+     * Include and merge with fallbacks
+     *
+     * @var bool
+     */
+    protected $with_fallback = true;
+
+    /**
+     * Excludes fallback data
+     */
+    public function withoutFallback()
+    {
+        $this->with_fallback = false;
+
+        return $this;
+    }
+
+    /**
      * Get a specific key from the settings data.
      *
      * @param string|array $key
@@ -44,7 +61,7 @@ abstract class Driver
 
         $this->load();
 
-        return Arr::get($this->data, $key, $this->getFallback($key, $default));
+        return Arr::get($this->data, $key, $default);
     }
 
     /**
@@ -199,7 +216,10 @@ abstract class Driver
             return;
         }
 
-        $this->data = $this->readData();
+        $fallback_data = $this->with_fallback ? config('setting.fallback') : [];
+        $driver_data = $this->readData();
+
+        $this->data = array_merge((array) $fallback_data, (array) $driver_data);
         $this->loaded = true;
     }
 
