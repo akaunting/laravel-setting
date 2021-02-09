@@ -21,14 +21,6 @@ class Provider extends ServiceProvider
             __DIR__ . '/Migrations/2017_08_24_000000_create_settings_table.php' => database_path('migrations/2017_08_24_000000_create_settings_table.php'),
         ], 'setting');
 
-        $this->app->singleton('setting.manager', function ($app) {
-            return new Manager($app);
-        });
-
-        $this->app->singleton('setting', function ($app) {
-            return $app['setting.manager']->driver();
-        });
-
         // Auto save setting
         if (config('setting.auto_save')) {
             $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
@@ -50,6 +42,14 @@ class Provider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton('setting.manager', function ($app) {
+            return new Manager($app);
+        });
+
+        $this->app->singleton('setting', function ($app) {
+            return $app['setting.manager']->driver();
+        });
+
         $this->mergeConfigFrom(__DIR__ . '/Config/setting.php', 'setting');
     }
 
