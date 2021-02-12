@@ -134,4 +134,31 @@ class Arr
 
         unset($data[$key]);
     }
+
+    /**
+     * Merge two multidimensional arrays recursive
+     *
+     * @param array $array_1
+     * @param array $array_2
+     *
+     * @return array
+     */
+    public static function merge(array $array_1, array $array_2)
+    {
+        $merged = $array_1;
+
+        foreach ($array_2 as $key => $value) {
+            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
+                $merged[$key] = static::merge($merged[$key], $value);
+            } elseif (is_numeric($key)) {
+                if (!in_array($value, $merged)) {
+                    $merged[] = $value;
+                }
+            } else {
+                $merged[$key] = $value;
+            }
+        }
+
+        return $merged;
+    }
 }

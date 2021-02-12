@@ -219,7 +219,7 @@ abstract class Driver
         $fallback_data = $this->with_fallback ? config('setting.fallback') : [];
         $driver_data = $this->readData();
 
-        $this->data = array_merge((array) $fallback_data, (array) $driver_data);
+        $this->data = Arr::merge((array) $fallback_data, (array) $driver_data);
         $this->loaded = true;
     }
 
