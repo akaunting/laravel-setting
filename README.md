@@ -161,7 +161,7 @@ class MyDriver extends Akaunting\Setting\Contracts\Driver
 	// ...
 }
 
-setting()->extend('mydriver', function($app) {
+app('setting.manager')->extend('mydriver', function($app) {
 	return $app->make('MyDriver');
 });
 ```
