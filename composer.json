@@ -1,6 +1,6 @@
 {
-    "name": "akaunting/setting",
-    "description": "Persistent settings package for Laravel.",
+    "name": "akaunting/laravel-setting",
+    "description": "Persistent settings package for Laravel",
     "keywords": [
         "laravel",
         "persistent",
